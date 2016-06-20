@@ -1,0 +1,166 @@
+
+<html>
+	{% load staticfiles %}	
+	<meta charset="utf-8">
+	<head>
+		
+		<link rel="stylesheet" href="{% static 'css/style.css'%}" >
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" >
+		<title>SHOP</title>
+	
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-1">
+				<a href="{% url 'shop1'%}">
+					<img alt="Bootstrap Image Preview" src="{% static 'img/images.jpg'%}">
+				</a>
+				</div>
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-1">
+					 
+					<button type="button" class="btn btn-default">
+						Join
+					</button>
+				</div>
+				<div class="col-md-1">
+					 <a href="{% url 'shop3'%}">
+					<button type="button" class="btn btn-default">
+						Sign
+					</button>
+					</a>
+					{% if user and not user.is_anonymous %}
+		<p>Hello, {{user.last_name}} {{user.first_name}}!</p>
+		<a href = "{% url 'logout' %}"> Sign out </a>
+	{% endif %}
+				</div>
+				<div class="col-md-1">
+					 
+					 <a href="{% url 'shop4'%}">
+					<button type="button" class="btn btn-default">
+						Basket
+					</button>
+					</a>
+					<div class ="bag">{{total_price}}</div>
+				</div>
+				
+			</div>
+			<nav class="navbar navbar-default" role="navigation">
+				
+				
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#">Home</a>
+						</li>
+						<li>
+							<a href="#">Contacts</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reviews<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">Text</a>
+								</li>
+								<li>
+									<a href="#">Photo</a>
+								</li>
+								<li>
+									<a href="#">Marks</a>
+								</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control">
+						</div> 
+						<button type="submit" class="btn btn-default">
+							Submit
+						</button>
+					</form>
+					
+				</div>
+				
+			</nav>
+
+
+</div>
+
+	
+		</div>
+	</div>
+</div>
+
+<div class = "gallery">
+{% for item in items %}
+	<div class = "product-main"> 
+		<div class = "product"> 
+			<h2><a href ="/shop2/{{item.id}}"> {{ item.name }}</a></h2>
+			<div class = "product-img"><a href = "#"><img src="{% static item.image %}" width = "250" height = "130" alt = "" /></a> </div>
+			<p class = "price"> {{ item.price }} <span>Руб</p> </span><a href = "#"> 
+
+
+		</div>
+
+	</div>
+
+
+
+
+
+
+
+
+
+{% endfor %}
+
+
+		
+</div>
+
+
+ 
+        <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+$(document).ready(function(){
+  $( "button.add" ).click(function(){
+    var current_button = $(this);
+    $.ajax({
+        url: "/add-to-cart/",
+        type: "GET",
+        data: {"item": $(this).attr('id')},
+        success: function(data){
+          current_button.replaceWith( data );
+        }
+    });
+   });
+});
+</script>
+  </body>
+</html>
