@@ -10,11 +10,12 @@ from .models import Product, Payment
 from cart.cart import Cart
 import time
 import datetime
+from django.core.cache import cache
 # Create your views here.
 def func1(request):
-  items = Product.objects.filter().order_by('name')
+  cache.get_or_set('items', Product.objects.filter().order_by('name'), 10)
   cart = Cart(request)
-  return render(request, 'blog/index.html', {'items': items, 'total_price' : cart.summary()})
+  return render(request, 'blog/index.html', {'items': cache.get_or_set('items', Product.objects.filter().order_by('name'), 10), 'total_price' : cart.summary()})
     
 def func2(request, product_id):
     product = Product.objects.get(pk=product_id)
@@ -72,7 +73,7 @@ def paypal_pay(request):
         products.append(elem.product.name)
       paypal_dict = {
           "business": "ruslan_cimbalyuk-facilitator@mail.ru",
-          "amount": 1,
+          "amount": cart.summary(),
           "currency_code": "RUB",
           "item_name": products,
           "invoice": "INV-" + str(int(time.time())),

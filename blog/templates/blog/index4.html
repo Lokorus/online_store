@@ -122,8 +122,8 @@
 		{% for elem in cart %}
 		<div class = "b_product" id="{{ elem.product.id }}">
 		
-			<div class = "basket-img"><a href = "#"><img src="{% static elem.product.image %}" width = "200" height = "110" alt = "" /></a> </div>
-			<div class = "product_n"><h1>{{ elem.product.name }}</h1></div>			
+			<div class = "basket-img"><a href = "/shop2/{{ elem.product.id }}"><img src="{% static elem.product.image %}" width = "200" height = "110" alt = "" /></a> </div>
+			<div class = "product_n"><h1>{{ elem.product.name }}</h1></div>		
 			<div class = "priceb"> {{ elem.product.price }}</div>
 			<div class ="del"><a><button id="{{ elem.product.id }}" class="delete"> Delete </button></a></div>
 			</div>
